@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Galaxy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- GALAXY.CSS CONTENT --- */
+        /* 1. Base Setup */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url("universe.jpg") center/cover no-repeat fixed;
+            color: white;
+        }
+
+        /* 2. Centering the Main Heading (Universe) */
+        h1 {
+            width: 100%;
+            text-align: center;
+            color: #E6F1FF;
+            margin-top: 100px; /* Space so it doesn't hide under top buttons */
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        /* 3. Navigation & Menu (Overlapping & 10px Left Space) */
+        #menu {
+            position: fixed;
+            top: 20px;
+            left: 10px;        /* Fixed 10px space from the left edge */
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            cursor: pointer;
+            z-index: 1000;     /* Keeps button above everything */
+        }
+
+        /* 4. Text Content Styling & Responsive Margins */
+
+        /* Default for Phone (10px) */
+        .o-g, .or-g, .org-sec, .fun-name {
+            color: #FF4C4C;
+            text-align: left;
+            margin-top: 30px;
+            margin-left: 10px; 
+        }
+
+        .og-ans, .org-ans, .org-secans, .funname-ans {
+            color: #C9D1D9;
+            line-height: 1.6;
+            margin-left: 10px;  
+            margin-right: 10px; 
+        }
+
+        /* Override for Laptop (40px) */
+        @media screen and (min-width: 1024px) {
+            .o-g, .or-g, .org-sec, .fun-name {
+                margin-left: 40px; 
+            }
+            .og-ans, .org-ans, .org-secans, .funname-ans {
+                margin-left: 40px;
+                margin-right: 40px;
+            }
+        }
+
+        /* --- Navigation & Menu Styles (Unchanged but Cleaned) --- */
+
+        button {
+            position: fixed;
+            top: 20px;
+            padding: 8px 14px;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        button:hover {
+            background: white;
+            color: black;
+        }
+
+        #menu { left: 20px; }
+        .home { left: 20px; }
+        .gala-btn { left: 150px; }
+        .info-btn { left: 300px; }
+        .sol-btn { left: 450px; }
+        .q-btn { left: 600px; }
+
+        #btnMenu {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            width: 200px;
+            padding: 15px;
+            background: transparent;
+            border: none;
+        }
+
+        #menubox {
+            padding: 15px;
+            display: none;
+            margin-top: 40px;
+            width: 200px;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #menubox button {
+            width: 100%;
+            margin: 5px 0;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        /* Profile Menu */
+        #profilePic {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        #profilePopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .popupBox {
+            width: 260px;
+            padding: 25px;
+            background: rgba(0,0,0,0.9);
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        #popupProfilePic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+
+        .popupBox button {
+            width: 100%;
+            margin: 6px 0;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        /* Existing Mobile-specific tweaks */
+        @media screen and (max-width: 600px) {
+            body {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="btnMenu">
+    <button class="menu">Menu ☰ </button>
+    <div id="menubox">
+        <button class="home">Home</button>
+        <button class="info-btn">Information</button>
+        <button class="sol-btn">Solar System</button>
+        <button class="ear">The Earth</button>
+        <button class="q-btn">Question</button>
+    </div>
+</div>
+
+<img id="profilePic" src="userPhoto.jpg">
+
+<div id="profilePopup">
+    <div class="popupBox">
+        <img id="popupProfilePic" src="userPhoto.jpg">
+        <div id="menuUsername"></div>
+        <button id="deletePhotoBtn">Delete Photo</button> 
+        <button id="changePhotoBtn">Change Photo</button>
+        <button id="logoutBtn">Logout</button>
+        <button id="signUpBtn">Sign Up</button>
+        <button id="loginBtn">Log In</button>
+    </div>
+</div>
+
+<input type="file" id="photoInput" style="display:none;">
+
+<br><br>
+<h1>GALAXIES</h1>
+
+<div class="content">
+    <div class="text">
+        <h2 class="o-g">➢ Our Galaxy :</h2>
+        <h4 class="og-ans">Our galaxy is called the Milky Way. It is a large spiral galaxy made up of billions of stars, planets, gas, and dust. The Milky Way is about 100,000 light-years wide and contains more than 100 billion stars, including our Sun. Our solar system lies in a spiral arm known as the Orion Arm. At the center of the galaxy is a supermassive black hole called Sagittarius A*. The Sun takes about 225 to 250 million years to complete one full orbit around the Milky Way. 🌌</h4>
+
+        <h2 class="or-g"> ➢ Nearby & well-known galaxies : </h2>
+        <h4 class="org-ans"> ‣ Andromeda Galaxy (M31)<br>
+         ‣ Triangulum Galaxy (M33)<br>
+         ‣ Large Magellanic Cloud<br>
+         ‣ Small Magellanic Cloud<br>
+         ‣ Famous spiral galaxies<br>
+         ‣ Whirlpool Galaxy (M51)<br>
+         ‣ Pinwheel Galaxy (M101)<br>
+         ‣ Sunflower Galaxy (M63)</h4>
+
+        <h2 class="org-sec"> ➢ Elliptical & unusual galaxies</h2>
+        <h4 class="org-secans"> ‣ Sombrero Galaxy (M104)<br>
+         ‣ Centaurus A<br>
+         ‣ Messier 87 (M87) – famous for its black hole image </h4>
+
+        <h2 class="fun-name"> ➢ Fun / interesting names</h2>
+        <h4 class="funname-ans">
+         ‣ Black Eye Galaxy<br>
+         ‣ Cartwheel Galaxy<br>
+         ‣ Tadpole Galaxy<br>
+         ‣ Antennae Galaxies
+        </h4>
+    </div>
+</div>
+
+<script>
+    /* --- GALAXY.JS CONTENT --- */
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // ---------------- LOAD DATA ----------------
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+
+        const signUpBtn = document.getElementById("signUpBtn");
+        const loginBtn = document.getElementById("loginBtn");
+        const profilePic = document.getElementById("profilePic");
+        const profilePopup = document.getElementById("profilePopup");
+        const popupProfilePic = document.getElementById("popupProfilePic");
+        const btnMenu = document.getElementById("btnMenu");
+        const menubox = document.getElementById("menubox");
+        const menuUsername = document.getElementById("menuUsername");
+        const changePhotoBtn = document.getElementById("changePhotoBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const deletePhotoBtn = document.getElementById("deletePhotoBtn");
+        const photoInput = document.getElementById("photoInput");
+        const defaultPhoto = "userPhoto.jpg";
+
+        // -------- VALIDATION HELPERS --------
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function isUmail(email) {
+            return email.endsWith("@umail.com");
+        }
+
+        function isStrongPassword(password) {
+            return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(password);
+        }
+
+        // ---------------- UPDATE UI ----------------
+        function updateUI() {
+            if (!signUpBtn || !loginBtn) return;
+
+            signUpBtn.style.display = "none";
+            loginBtn.style.display = "none";
+            if (changePhotoBtn) changePhotoBtn.style.display = "none";
+            if (logoutBtn) logoutBtn.style.display = "none";
+            if (deletePhotoBtn) deletePhotoBtn.style.display = "none";
+            if (menuUsername) menuUsername.style.display = "none";
+
+            if (currentUser) {
+                if (profilePic) profilePic.src = currentUser.photo || defaultPhoto;
+                if (popupProfilePic) popupProfilePic.src = currentUser.photo || defaultPhoto;
+                if (menuUsername) {
+                    menuUsername.textContent = "Hi, " + currentUser.username;
+                    menuUsername.style.display = "block";
+                }
+                if (changePhotoBtn) changePhotoBtn.style.display = "block";
+                if (logoutBtn) logoutBtn.style.display = "block";
+
+                // Logic: Only show delete button if user has a custom photo
+                if (currentUser.photo && currentUser.photo !== defaultPhoto && deletePhotoBtn)
+                    deletePhotoBtn.style.display = "block";
+
+            } else {
+                if (profilePic) profilePic.src = defaultPhoto;
+                if (popupProfilePic) popupProfilePic.src = defaultPhoto;
+                signUpBtn.style.display = "block";
+                loginBtn.style.display = "block";
+            }
+        }
+
+        updateUI();
+
+        // ---------------- MENU & POPUP ----------------
+        if (btnMenu) {
+            btnMenu.addEventListener("click", e => {
+                e.stopPropagation();
+                menubox.style.display = menubox.style.display === "block" ? "none" : "block";
+            });
+        }
+
+        document.addEventListener("click", () => {
+            if (menubox) menubox.style.display = "none";
+        });
+
+        if (profilePic) {
+            profilePic.addEventListener("click", e => {
+                e.stopPropagation();
+                profilePopup.style.display = "flex";
+            });
+        }
+
+        if (profilePopup) {
+            profilePopup.addEventListener("click", e => {
+                if (e.target === profilePopup) profilePopup.style.display = "none";
+            });
+        }
+
+        // ---------------- SIGN UP (WITH PERSISTENT LOOP) ----------------
+        if (signUpBtn) {
+            signUpBtn.addEventListener("click", function () {
+                let valid = false;
+                let username, email, password;
+
+                while (!valid) {
+                    username = prompt("Enter username (At least 3 characters):")?.trim();
+                    if (username === null) break; 
+                    if (username.length < 3) {
+                        alert("❌ Username must be at least 3 characters!");
+                        continue;
+                    }
+
+                    let rawEmail = prompt("Create your umail id (At least 8 letters, ends with @umail.com):")?.trim().toLowerCase();
+                    if (rawEmail === null) break;
+                    
+                    email = rawEmail.endsWith("@umail.com") ? rawEmail : rawEmail + "@umail.com";
+                    let prefix = email.split('@')[0];
+
+                    if (prefix.length < 8 || !isValidEmail(email)) {
+                        alert("❌ Invalid format! Email name must be 8+ letters before @umail.com");
+                        continue;
+                    }
+
+                    if (users.some(u => u.username === username || u.email === email)) {
+                        alert("❌ Username or email already exists!");
+                        continue;
+                    }
+
+                    password = prompt("Create password (8+ chars, must have a number, letter, and symbol):");
+                    if (password === null) break;
+                    if (!isStrongPassword(password)) {
+                        alert("❌ Weak password! Use 8+ characters including a letter, number, and symbol.");
+                        continue;
+                    }
+
+                    valid = true;
+                    const newUser = { username, email, password, photo: defaultPhoto };
+                    users.push(newUser);
+                    localStorage.setItem("users", JSON.stringify(users));
+                    currentUser = newUser;
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+                    alert("✅ Sign up successful!");
+                    updateUI();
+                    location.reload();
+                }
+            });
+        }
+
+        // ---------------- LOGIN ----------------
+        if (loginBtn) {
+            loginBtn.addEventListener("click", function () {
+                let emailInput = prompt("Enter your umail id:")?.trim().toLowerCase();
+                if (!emailInput) return;
+                if (!emailInput.endsWith("@umail.com")) emailInput += "@umail.com";
+
+                let passwordInput = prompt("Enter password:");
+                if (!passwordInput) return;
+
+                const user = users.find(u => 
+                    u.email.toLowerCase() === emailInput && u.password === passwordInput
+                );
+
+                if (!user) {
+                    alert("❌ Invalid email or password. Please try again.");
+                    return;
+                }
+
+                currentUser = user;
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                updateUI();
+                alert("✅ Welcome back, " + user.username + "!");
+                location.reload(); 
+            });
+        }
+
+        // ---------------- PHOTO HANDLING ----------------
+        if (changePhotoBtn && photoInput) {
+            changePhotoBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                photoInput.click();
+            });
+
+            photoInput.addEventListener("change", function () {
+                const file = this.files[0];
+                if (!file || !currentUser) return;
+
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const base64Photo = reader.result;
+                    currentUser.photo = base64Photo;
+                    users = users.map(u => 
+                        u.email === currentUser.email ? { ...u, photo: base64Photo } : u
+                    );
+                    localStorage.setItem("users", JSON.stringify(users));
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                    if (profilePic) profilePic.src = base64Photo;
+                    if (popupProfilePic) popupProfilePic.src = base64Photo;
+                    alert("Photo updated successfully!");
+                    updateUI();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+    if (deletePhotoBtn) {
+        deletePhotoBtn.onclick = () => {
+            // Confirmation Added
+            if(confirm("Are you sure you want to delete your profile photo?")) {
+                currentUser.photo = defaultPhoto;
+                users = users.map(u => u.email === currentUser.email ? { ...u, photo: defaultPhoto } : u);
+                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                updateUI();
+            }
+        };
+    }
+
+        // ---------------- LOGOUT ----------------
+        if (logoutBtn) {
+            logoutBtn.addEventListener("click", function () {
+                if (confirm("Are you sure you want to log out?")) {
+                    localStorage.removeItem("currentUser");
+                    currentUser = null;
+                    updateUI();
+                    alert("You have been logged out successfully.");
+                    window.location.href = "index.html"; 
+                }
+            });
+        }
+
+        // ---------------- NAVIGATION ----------------
+        function setupNavigation(selector, url) {
+            document.querySelectorAll(selector).forEach(btn => {
+                btn.addEventListener("click", () => {
+                    window.location.href = url;
+                });
+            });
+        }
+
+        setupNavigation(".info-btn", "information.html");
+        setupNavigation(".home", "index.html");
+        setupNavigation(".sol-btn", "solar system.html");
+        setupNavigation(".ear", "the earth.html");
+        setupNavigation(".q-btn", "question.html");
+
+    });
+</script>
+
+</body>
+</html>

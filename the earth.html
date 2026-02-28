@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Earth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- CORRECTED THE EARTH.CSS CONTENT --- */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        body {
+            background: url("universe.jpg") center center / cover no-repeat fixed;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 {
+            width: 100%;
+            margin-top: 100px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #E6F1FF;
+            display: block;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            padding-bottom: 50px; /* Space at the bottom */
+        }
+
+        h2 {
+            color: #FF4C4C;
+            text-align: left;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            margin: 0 10px 20px 10px;
+            text-align: left;
+            line-height: 1.8;
+            color: #C9D1D9;
+        }
+
+        @media screen and (min-width: 1024px) {
+            h2 { margin-left: 40px; }
+            h4 { margin-left: 40px; margin-right: 40px; }
+        }
+
+        /* Navigation buttons */
+        button {
+            position: fixed;
+            top: 20px;
+            padding: 8px 14px;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        button:hover { background: white; color: black; }
+
+        #btnMenu {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            width: 200px;
+            padding: 15px;
+            z-index: 1000;
+        }
+
+        #menubox {
+            padding: 15px;
+            display: none;
+            margin-top: 40px;
+            width: 200px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #menubox button {
+            width: 100%;
+            margin: 5px 0;
+            position: static;
+        }
+
+        /* Profile Menu */
+        #profilePic {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            object-fit: cover;
+        }
+
+        #profilePopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popupBox {
+            width: 260px;
+            padding: 25px;
+            background: rgba(10, 10, 10, 0.95);
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #444;
+        }
+
+        #popupProfilePic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            object-fit: cover;
+        }
+
+        .popupBox button {
+            width: 100%;
+            margin: 6px 0;
+            position: static;
+        }
+    </style>
+</head>
+<body>
+
+<div id="btnMenu">
+    <button class="menu">Menu ☰ </button>
+    <div id="menubox">
+        <button class="home">Home</button>
+        <button class="gala-btn">Galaxies</button>
+        <button class="info-btn">Information</button>
+        <button class="sol-btn">Solar System</button>
+        <button class="q-btn">Question</button>
+    </div>
+</div>
+
+<img id="profilePic" src="userPhoto.jpg">
+
+<div id="profilePopup">
+    <div class="popupBox">
+        <img id="popupProfilePic" src="userPhoto.jpg">
+        <div id="menuUsername" style="margin-bottom: 10px; font-weight: bold;"></div>
+        <button id="deletePhotoBtn">Delete Photo</button> 
+        <button id="changePhotoBtn">Change Photo</button>
+        <button id="logoutBtn">Logout</button>
+        <button id="signUpBtn">Sign Up</button>
+        <button id="loginBtn">Log In</button>
+    </div>
+</div>
+
+<input type="file" id="photoInput" style="display:none;">
+
+<div class="content">
+    <h1>THE EARTH</h1>
+
+    <h2> ➢ The Core</h2>
+    <h4>The Earth’s core is the very center of our planet. It is a big, hot ball of iron and nickel. The core consists of two layers: the inner core and the outer core. The inner core is solid because of the massive pressure from the layers above it. It’s as hot as the surface of the sun! The outer core is liquid and flows around the inner core, creating Earth’s magnetic field, which protects us from space radiation.</h4>
+
+    <h2> ➢ The Mantle</h2>
+    <h4>The mantle is the thickest layer of the Earth, located between the core and the crust. It is made of hot, semi-solid rock that behaves like very thick syrup. This rock moves slowly in cycles called convection currents, which are responsible for moving the continents and causing earthquakes. The mantle is about 1,800 miles (2,900 km) thick and makes up nearly 80 percent of the Earth’s total volume.</h4>
+
+    <h2> ➢ The Crust</h2>
+    <h4>The crust is the most exposed layer of the earth. It is the earth’s hard outer shell, the surface on which we are living. In relation to the other layers, the crust is much thinner. It floats upon the softer, denser mantle. There is an Oceanic crust (thinner, made of basalt) and a Continental crust (thicker, made of granite).</h4>
+
+    <h2> ➢ The Atmosphere</h2>
+    <h4>The earth is surrounded by various gases. It consists of 78% nitrogen, 21% oxygen, and 1% other gases. The Troposphere is where weather happens, and the Stratosphere contains the ozone layer that protects us from UV rays. The atmosphere is about 500 miles (800 km) thick.</h4>
+</div>
+
+<script>
+    /* --- THE EARTH.JS CONTENT --- */
+    document.addEventListener("DOMContentLoaded", function () {
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+
+        const signUpBtn = document.getElementById("signUpBtn");
+        const loginBtn = document.getElementById("loginBtn");
+        const profilePic = document.getElementById("profilePic");
+        const profilePopup = document.getElementById("profilePopup");
+        const popupProfilePic = document.getElementById("popupProfilePic");
+        const btnMenu = document.getElementById("btnMenu");
+        const menubox = document.getElementById("menubox");
+        const menuUsername = document.getElementById("menuUsername");
+        const changePhotoBtn = document.getElementById("changePhotoBtn");
+        const deletePhotoBtn = document.getElementById("deletePhotoBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const photoInput = document.getElementById("photoInput");
+        const defaultPhoto = "userPhoto.jpg";
+
+        function isStrongPassword(p) { return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(p); }
+
+        function updateUI() {
+            signUpBtn.style.display = currentUser ? "none" : "block";
+            loginBtn.style.display = currentUser ? "none" : "block";
+            logoutBtn.style.display = currentUser ? "block" : "none";
+            changePhotoBtn.style.display = currentUser ? "block" : "none";
+            
+            if (currentUser) {
+                profilePic.src = currentUser.photo || defaultPhoto;
+                popupProfilePic.src = currentUser.photo || defaultPhoto;
+                menuUsername.textContent = "Hi, " + currentUser.username;
+                
+                // Only show delete button if the photo is NOT the default photo
+                if (currentUser.photo && currentUser.photo !== defaultPhoto) {
+                    deletePhotoBtn.style.display = "block";
+                } else {
+                    deletePhotoBtn.style.display = "none";
+                }
+            } else {
+                profilePic.src = defaultPhoto;
+                popupProfilePic.src = defaultPhoto;
+                menuUsername.textContent = "";
+                deletePhotoBtn.style.display = "none";
+            }
+        }
+        updateUI();
+
+        btnMenu.onclick = (e) => {
+            e.stopPropagation();
+            menubox.style.display = (menubox.style.display === "block") ? "none" : "block";
+        };
+        document.onclick = () => { menubox.style.display = "none"; };
+
+        profilePic.onclick = (e) => {
+            e.stopPropagation();
+            profilePopup.style.display = "flex";
+        };
+        profilePopup.onclick = (e) => { if (e.target === profilePopup) profilePopup.style.display = "none"; };
+
+        signUpBtn.onclick = () => {
+            let name = prompt("Username (3+ chars):");
+            if (!name || name.length < 3) return alert("Invalid Name");
+            let rawEmail = prompt("Email:");
+            let email = rawEmail.endsWith("@umail.com") ? rawEmail : rawEmail + "@umail.com";
+            let pass = prompt("Strong Password (8+ chars, num, let, symbol):");
+            if (!isStrongPassword(pass)) return alert("Password too weak!");
+
+            const newUser = { username: name, email, password: pass, photo: defaultPhoto };
+            users.push(newUser);
+            localStorage.setItem("users", JSON.stringify(users));
+            currentUser = newUser;
+            localStorage.setItem("currentUser", JSON.stringify(currentUser));
+            location.reload();
+        };
+
+        loginBtn.onclick = () => {
+            let emailInput = prompt("Email:");
+            if (!emailInput.endsWith("@umail.com")) emailInput += "@umail.com";
+            let passInput = prompt("Password:");
+            const user = users.find(u => u.email === emailInput && u.password === passInput);
+            if (!user) return alert("Invalid credentials.");
+            currentUser = user;
+            localStorage.setItem("currentUser", JSON.stringify(user));
+            location.reload();
+        };
+
+        changePhotoBtn.onclick = () => photoInput.click();
+        photoInput.onchange = function() {
+            const reader = new FileReader();
+            reader.onload = function() {
+                currentUser.photo = reader.result;
+                users = users.map(u => u.email === currentUser.email ? { ...u, photo: reader.result } : u);
+                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                location.reload();
+            };
+            reader.readAsDataURL(this.files[0]);
+        };
+
+        if (deletePhotoBtn) {
+            deletePhotoBtn.onclick = () => {
+                // Added confirmation prompt
+                if (confirm("Are you sure you want to delete your photo?")) {
+                    currentUser.photo = defaultPhoto;
+                    users = users.map(u => u.email === currentUser.email ? { ...u, photo: defaultPhoto } : u);
+                    localStorage.setItem("users", JSON.stringify(users));
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                    updateUI();
+                    location.reload();
+                }
+            };
+        }
+
+        logoutBtn.onclick = () => {
+            if (confirm("Logout?")) {
+                localStorage.removeItem("currentUser");
+                window.location.href = "index.html";
+            }
+        };
+
+        function setupNav(selector, url) {
+            document.querySelectorAll(selector).forEach(btn => btn.onclick = () => window.location.href = url);
+        }
+        setupNav(".info-btn", "information.html");
+        setupNav(".home", "index.html");
+        setupNav(".gala-btn", "galaxy.html");
+        setupNav(".sol-btn", "solar system.html");
+        setupNav(".q-btn", "question.html");
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Universe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* --- CORRECTED UNIVERSE.CSS --- */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        body {
+            /* Changed to 'fixed' and added min-height to ensure full display */
+            background: url("universe.jpg") center center / cover no-repeat fixed;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigation buttons */
+        button {
+            position: fixed;
+            top: 20px;
+            padding: 8px 14px;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        button:hover {
+            background: white;
+            color: black;
+        }
+
+        #btnMenu {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            width: 200px;
+            padding: 15px;
+            z-index: 1000;
+        }
+
+        #menubox {
+            padding: 15px;
+            display: none;
+            margin-top: 40px;
+            width: 200px;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #menubox button {
+            width: 100%;
+            margin: 5px 0;
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
+        /* Profile Menu */
+        #profilePic {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            object-fit: cover;
+        }
+
+        #profilePopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .popupBox {
+            width: 280px;
+            padding: 30px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid #444;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        #popupProfilePic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        /* Title styling - Centered correctly */
+        .title-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .title {
+            color: white;
+            font-size: 48px;
+            letter-spacing: 5px;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+            border-top: 2px solid white;
+            border-bottom: 2px solid white;
+        }
+
+        @media screen and (max-width: 600px) {
+            .title { font-size: 28px; }
+            /* Remove fixed color to keep universe background visible on mobile */
+            body { background-attachment: scroll; } 
+        }
+    </style>
+</head>
+<body>
+
+<div id="btnMenu">
+    <button class="menu">Menu ☰ </button>
+    <div id="menubox">
+        <button class="info-btn">Information</button>
+        <button class="gala-btn">Galaxies</button>
+        <button class="sol-btn">Solar System</button>
+        <button class="ear">The Earth</button>
+        <button class="q-btn">Question</button>
+    </div>
+</div>
+
+<img id="profilePic" src="userPhoto.jpg">
+
+<div id="profilePopup">
+    <div class="popupBox">
+        <img id="popupProfilePic" src="userPhoto.jpg">
+        <div id="menuUsername" style="margin-bottom: 15px; font-weight: bold;"></div>
+        <button id="deletePhotoBtn" style="position:static; width:100%; margin-bottom:10px;">Delete Photo</button> 
+        <button id="changePhotoBtn" style="position:static; width:100%; margin-bottom:10px;">Change Photo</button>
+        <button id="logoutBtn" style="position:static; width:100%; margin-bottom:10px;">Logout</button>
+        <button id="signUpBtn" style="position:static; width:100%; margin-bottom:10px;">Sign Up</button>
+        <button id="loginBtn" style="position:static; width:100%;">Log In</button>
+    </div>
+</div>
+
+<input type="file" id="photoInput" style="display:none;">
+
+<div class="title-container">
+    <div class="title">
+        THE UNIVERSE
+    </div>
+</div>
+
+<script>
+    /* --- UNIVERSE.JS CONTENT --- */
+    document.addEventListener("DOMContentLoaded", function () {
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        let currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+
+        const signUpBtn = document.getElementById("signUpBtn");
+        const loginBtn = document.getElementById("loginBtn");
+        const profilePic = document.getElementById("profilePic");
+        const profilePopup = document.getElementById("profilePopup");
+        const popupProfilePic = document.getElementById("popupProfilePic");
+        const btnMenu = document.getElementById("btnMenu");
+        const menubox = document.getElementById("menubox");
+        const menuUsername = document.getElementById("menuUsername");
+        const changePhotoBtn = document.getElementById("changePhotoBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+        const deletePhotoBtn = document.getElementById("deletePhotoBtn");
+        const photoInput = document.getElementById("photoInput");
+        const defaultPhoto = "userPhoto.jpg";
+
+        function isStrongPassword(p) { return /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(p); }
+
+        function updateUI() {
+            signUpBtn.style.display = currentUser ? "none" : "block";
+            loginBtn.style.display = currentUser ? "none" : "block";
+            logoutBtn.style.display = currentUser ? "block" : "none";
+            changePhotoBtn.style.display = currentUser ? "block" : "none";
+            
+            // Logic: Hide delete button if no user or if user is using default photo
+            if (currentUser && currentUser.photo && currentUser.photo !== defaultPhoto) {
+                deletePhotoBtn.style.display = "block";
+            } else {
+                deletePhotoBtn.style.display = "none";
+            }
+            
+            if (currentUser) {
+                profilePic.src = currentUser.photo || defaultPhoto;
+                popupProfilePic.src = currentUser.photo || defaultPhoto;
+                menuUsername.textContent = "Hi, " + currentUser.username;
+                menuUsername.style.display = "block";
+            } else {
+                profilePic.src = defaultPhoto;
+                popupProfilePic.src = defaultPhoto;
+                menuUsername.style.display = "none";
+            }
+        }
+        updateUI();
+
+        // Menu Toggle
+        btnMenu.onclick = (e) => {
+            e.stopPropagation();
+            menubox.style.display = (menubox.style.display === "block") ? "none" : "block";
+        };
+
+        document.onclick = () => { menubox.style.display = "none"; };
+
+        // Profile Popup
+        profilePic.onclick = (e) => {
+            e.stopPropagation();
+            profilePopup.style.display = "flex";
+        };
+
+        profilePopup.onclick = (e) => {
+            if (e.target === profilePopup) profilePopup.style.display = "none";
+        };
+
+        // Sign Up
+        signUpBtn.onclick = () => {
+            let name = prompt("Enter username (3+ chars):")?.trim();
+            if (!name || name.length < 3) return alert("Invalid Username");
+            let rawEmail = prompt("Enter email:")?.trim().toLowerCase();
+            if (!rawEmail) return;
+            let email = rawEmail.endsWith("@umail.com") ? rawEmail : rawEmail + "@umail.com";
+            let pass = prompt("Create strong password (8+ chars, number, letter, symbol):");
+            if (!isStrongPassword(pass)) return alert("Password too weak!");
+
+            const newUser = { username: name, email, password: pass, photo: defaultPhoto };
+            users.push(newUser);
+            localStorage.setItem("users", JSON.stringify(users));
+            currentUser = newUser;
+            localStorage.setItem("currentUser", JSON.stringify(currentUser));
+            location.reload();
+        };
+
+        // Login
+        loginBtn.onclick = () => {
+            let emailInput = prompt("Enter email:")?.trim().toLowerCase();
+            if (!emailInput) return;
+            if (!emailInput.endsWith("@umail.com")) emailInput += "@umail.com";
+            let passInput = prompt("Enter password:");
+            const user = users.find(u => u.email === emailInput && u.password === passInput);
+            if (!user) return alert("Invalid credentials.");
+            currentUser = user;
+            localStorage.setItem("currentUser", JSON.stringify(user));
+            location.reload();
+        };
+
+        // Photo Update
+        changePhotoBtn.onclick = () => photoInput.click();
+        photoInput.onchange = function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    currentUser.photo = reader.result;
+                    users = users.map(u => u.email === currentUser.email ? { ...u, photo: reader.result } : u);
+                    localStorage.setItem("users", JSON.stringify(users));
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                    location.reload();
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        };
+
+        // Delete Photo with confirmation
+        if (deletePhotoBtn) {
+            deletePhotoBtn.onclick = () => {
+                if (confirm("Are you sure you want to delete your profile photo?")) {
+                    currentUser.photo = defaultPhoto;
+                    users = users.map(u => u.email === currentUser.email ? { ...u, photo: defaultPhoto } : u);
+                    localStorage.setItem("users", JSON.stringify(users));
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                    location.reload();
+                }
+            };
+        }
+
+        // Logout
+        logoutBtn.onclick = () => {
+            if (confirm("Logout?")) {
+                localStorage.removeItem("currentUser");
+                location.reload();
+            }
+        };
+
+        // Navigation
+        function setupNav(selector, url) {
+            document.querySelectorAll(selector).forEach(btn => btn.onclick = () => window.location.href = url);
+        }
+        setupNav(".info-btn", "information.html");
+        setupNav(".ear", "the earth.html");
+        setupNav(".gala-btn", "galaxy.html");
+        setupNav(".q-btn", "question.html");
+        setupNav(".sol-btn", "solar system.html");
+    });
+</script>
+</body>
+</html>
